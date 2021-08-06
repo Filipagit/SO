@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/wait.h>
-//lista o conteudo do diretorio do processo filho conseguii
+//lista o conteudo do diretorio do processo filho 
  int main(int argc, char**argv){
      int ret,pid,status;
      if((pid=fork())==0){
