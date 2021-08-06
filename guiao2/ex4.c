@@ -4,7 +4,7 @@
 
 //programa que crie dez processos filhos que deverão executar em concorrência. O pai
 //deverá esperar pelo fim da execução de todos os seus filhos, imprimindo os respectivos códigos de saı́da.
-// conseguiii
+
 int main(){
     int i;
     pid_t pid;
