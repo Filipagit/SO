@@ -1,28 +1,58 @@
 #include <unistd.h>
-#include <stdio.h>
 #include <sys/wait.h>
+#include <stdio.h>
 
+nt main(int argc, char* argv[]) {
+	if (argc < 2) {
+		printf("Usage: program <needle>\n");
+		exit(-1);
+	}
 
-//programa que crie uma descendência em profundidade de dez processos, ou seja, o
-//processo cria um filho, este filho cria outro, e assim por diante até ao décimo nı́vel de descendência.
-//Cada processo deverá imprimir o seu PID e o PID do seu pai.
+	pid_t pid;
+	int needle = atoi(argv[1]);
+	int rows = 10;
+	int cols = 10000;
+	int rand_max = 10000;
+	int status;
+	int **matrix;
 
-int main(){
-    int i;
-    pid_t pid;
-    int status;
-    for(i=1;i<=10;i++){
-        if((pid=fork())==0){
-            //processo filho 
-            printf("[%d]-SON #%d;my father is %d\n",i,getpid(),getppid());
-        }
-        else{
-            //processo pai 
-            pid_t terminated_pid=wait(&status);
-            printf("[%d]-FATHER #%d; my son is %d\n",i,getpid(),terminated_pid);
-            _exit(0);
-        }
-    }
-    _exit(0);
-    return 0;
+	//Allocate and populate matrix with random numbers
+	printf("Generating numbers from 0 to %d...", rand_max);
+	matrix = (int**) malloc(sizeof(int*) * rows);
+	for(int i=0; i<rows; i++) {
+		matrix[i] = (int*) malloc(sizeof(int) * cols);
+		for(int j=0; j<cols; j++) {
+			matrix[i][j] = rand() % rand_max;
+		}
+	}
+	printf("Done.\n");
+
+	for(int i=0; i<rows; i++) {
+		if((pid = fork()) == 0) {
+			printf("[pid %d] row: %d\n", getpid(), i);
+
+			//start searching for the given number in row #i
+			for(int j=0; j<cols; j++) {
+				if(matrix[i][j] == needle) {
+					_exit(i);
+				}
+			}
+			_exit(-1);
+		}
+	}
+
+	for(int i=0; i<rows; i++) {
+		pid_t terminated_pid = wait(&status);
+
+		if(WIFEXITED(status)) {
+			if(WEXITSTATUS(status) < 255) //255 = -1, na representação de 3bytes
+				printf("[pai] process %d exited. found number at row: %d\n", terminated_pid, WEXITSTATUS(status));
+			else 
+				printf("[pai] process %d exited. nothing found\n", terminated_pid);
+		}
+		else {
+			printf("[pai] process %d exited. something went wrong\n", terminated_pid);
+		}
+	}
+	return 0;
 }

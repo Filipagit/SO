@@ -1,34 +1,27 @@
 #include <unistd.h>
-#include <stdio.h>
 #include <sys/wait.h>
-
-//programa que crie dez processos filhos que deverão executar em concorrência. O pai
-//deverá esperar pelo fim da execução de todos os seus filhos, imprimindo os respectivos códigos de saı́da.
+#include <stdio.h>
 
 int main(){
-    int i;
-    pid_t pid;
-    int status;
-    for(i=1;i<=10;i++){
-        if((pid=fork())==0){
-            //processo filho
-            printf("my pid%d;my father pid %d\n",getpid(),getppid());
-            _exit(i);
-        }
-    }
-    for(i=1;i<=10;i++){
-        printf("novo ciclo: %d\n",i);
-        pid_t terminated_pid=wait(&status);
-        if(WIFEXITED(status)){// se correu tudo bem 
-         printf("FATHER: son with pid %d terminated with status %d\n",terminated_pid,WEXITSTATUS(status));
-
-         }
-          else{
-              printf("ocorreu um erro\n");
-          }
-     }
-    }
-    return 0;
+  int i;
+  int status;
+  pid_t rf;
+  for(i=0;i<10;i++){
+      if((rf=fork())==0){
+          printf("[FILHO] o meu pid é %d; o pid do meu pai é %d\n",getpid(),getppid());
+          _exit(i);
+      }
+  }
+  for(i=0;i<10;i++){
+      printf("Novo ciclo: %d\n",i);
+      pid_t terminated_pid=wait(&status);
+      if(WIFEXITED(status)){
+          printf("[PAI] o meu pid é %d status %d\n",terminated_pid,WEXITSTATUS(status));
+          printf("[PAI] o pid do meu filho é %d status %d\n",terminated_pid,WEXITSTATUS(status));
+      }
+      else{
+          printf("Erro\n");
+      }
+  }
+  return 0;
 }
-
- 

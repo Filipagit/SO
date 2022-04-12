@@ -1,9 +1,11 @@
-#include <unistd.h> /* chamadas ao sistema: defs e decls essenciais */
-#include <sys/wait.h> /* chamadas wait*() e macros relacionadas */
-
-//programa que imprima o seu identificador de processo e o do seu pai
+#include <unistd.h>
+#include <sys/wait.h>
+#include <stdio.h>
+//imprime o id do processo pai e o do seu processo
 int main(){
-    printf("pid: %d\n",getpid());
-    printf("pid do pai: %d\n",getppid());
-    return 0;
+printf("O meu pid é: %d\n",getpid());
+printf("O pid do meu pai é: %d\n",getppid());
+//sleep(10); adormece o processo durante 10 seg
+return 0;
 }
+

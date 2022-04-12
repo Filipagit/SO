@@ -1,17 +1,19 @@
-//programa que crie um processo filho. Pai e filho devem imprimir o seu identificador de
-//processo e o do seu pai. O pai deve ainda imprimir o PID do seu filho.  conseguii
-int main (){
-    pid_t pid;
-    if((pid=fork())==0){
-        //codigo do filho
-        printf("[FILHO] pid: %d\n",getpid());
-        printf("[FILHO] pid do pai: %d\n",getppid());
+#include <unistd.h>
+#include <sys/wait.h>
+#include <stdio.h>
+
+int main(){
+    pid_t pid=fork();
+    if(pid==0){
+        //Código do filho
+        printf("[FILHO] o meu pid é %d\n",getpid());
+        printf("[FILHO] o pid  do meu pai é %d\n",getppid());
     }
     else{
-        //codigo do pai 
-        printf(" pid: %d\n",getpid());
-        printf("pid do pai: %d\n",getppid());
-        printf("pid do filho: %d\n",pid);
+        //Código do pai
+        printf("[PAI] o meu pid é %d\n",getpid());
+        printf("[PAI] o  pid do meu pai  é %d\n",getppid());
+        printf("[PAI] o  pid do meu filho é %d\n",getpid());
+        //sleep(30); fica zombie
     }
-    return 0;
 }
