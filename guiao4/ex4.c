@@ -1,24 +1,17 @@
-/*
-Escreva um programa "redir2 que permita executar um comando, opcionalmente 
-redireccionando a entrada e/ou a saída. O programa podera ser invocado,
-com:
-redir [-i fich_entrada] [-o fich_saida] comando arg1 arg2 ...
-*/
-
 #include <unistd.h>
-#include <fcntl.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <fcntl.h>
+#include <stdlib.h>
 
 
-int main(int argc, char const *argv[]){
-	if(argc < 6){
+
+int main(int argc,char* argv[]){
+    if(argc < 6){
 		perror("Not enough arguments!!");
 		exit(1);
 	}
-	int input_fd;
+    int input_fd;
     int output_fd;
 
     /*Verificando se os argumentos estão certos*/

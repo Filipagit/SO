@@ -1,33 +1,30 @@
-#include <sys/types.h>
-#include <unistd.h> /* chamadas ao sistema: defs e decls essenciais */
-#include <fcntl.h> /* O_RDONLY, O_WRONLY, O_CREAT, O_* */
+#include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <sys/wait.h>
+#include <fcntl.h>
 
-/*
-Modifique novamente o programa inicial de modo a que seja executado o comando wc, sem argumentos,
-depois do redireccionamento dos descritores de entrada e saı́da. Note que, mais uma vez, as associações
-– e redireccionamentos – de descritores de ficheiros são preservados pela primitiva exec().
-*/
-int main(int argc, char* argv[]){
-    int imp=open("/etc/passwd",O_RDONLY);
-    int outp=open("saida.txt",O_CREAT | O_TRUNC | O_WRONLY,0644);
-    int err=open("erros.txt",O_CREAT | O_TRUNC | O_WRONLY,0644);
-    //faz a copia
-    int i=dup2(imp,0);
-    int o=dup2(outp,1);
-    int e=dup2(err,2);
-   //fecha o original 
-    close(imp);
-    close(outp);
-    close(err);
+//wc - print newline, word, and byte counts for each file
 
-    execlp("wc","wc",NULL);
-    /* Agora aparecem nos ficheiros o resultado da execucao de comando wc.
-    Além disso, não temos nada no erros.txt porque nao ha erros. Portanto 
-    foram redirecionados os resultados.
-    Agora não escrevemos nos ficheiros os standard input, output e error.*/
-    return 0;
+int main(int argc,char* argv[]){
+         //abre os ficheiros
+   int passfd=open("/etc/passwd",O_RDONLY);
+   int saifd=open("saida.txt",O_CREAT|O_TRUNC|O_WRONLY,0666);
+   int errfd=open("erros.txt",O_CREAT|O_TRUNC|O_WRONLY,0666);
+
+   //faz a copia
+   int r1=dup2(passfd,0);
+   int r2=dup2(saifd,1);
+   int r3=dup2(errfd,2);
+    
+    //fecha os originais
+   close(passfd);
+   close(saifd);
+   close(errfd);
+   execlp("wc","wc",NULL);
+   return 0;
 }
+/*
+com a utilização do exec no ficheiro de saida aparece o resultado da execucao do comando wc.
+Não temos erros logo o ficheiro erros.txt encontra se vazio.
+Agora nao escrevemos nos ficheiros os standard input ,output e error.
+*/
