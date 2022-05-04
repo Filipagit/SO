@@ -28,10 +28,10 @@ if((pid=fork())==0){
 }
 else{
     close(pipe_fd[0]);
-   
+    char * str="teste";
    for(size_t i=0; i< 3; i++) write(pipe_fd[1],str,strlen(str)+1);
     close(pipe_fd[1]);
-    wait(NULL)
+    wait(NULL);
 }
 return 0;
 }

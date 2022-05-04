@@ -14,7 +14,7 @@ int main(){
     int pipe_fd[2];
     if(pipe(pipe_fd <0)){
         perror("erro ao criar o pipe");
-        exit(1);
+        _exit(1);
     }
 //criar o processo filho
 int pid=-1;
@@ -32,7 +32,7 @@ else{
     char * str="teste";
     write(pipe_fd[1],str,strlen(str));
     close(pipe_fd[1]);
-    wait(NULL)
+    wait(NULL);
 }
 return 0;
 }
