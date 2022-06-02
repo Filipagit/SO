@@ -34,4 +34,3 @@ int servidor(){
      close(buffer);
 return 0;
 }
-
