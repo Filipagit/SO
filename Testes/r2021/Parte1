@@ -1,0 +1,12 @@
+1.
+Um processo bloqueado é um processo que espera um acontecimento que enquanto não ocorrer o impede de continuar a executar ,o processo que estava a ocorrer é interrompido.
+Este estado é importante para que ocorram as mudanças de contexto.
+P.e se estivermos no user mode e for necessário aceder à memória faz-se uma chamada ao sistema para informar que se precisa desses recursos.
+Ao fazer essa chamada ao sistema por um instante muda para o modo kernel para poder aceder a esses recursos.
+Para que o programa possa voltar à sua execução antes do CPU mudar para o kernel mode o estado do programa a decorrer é guardado no PCB.
+
+2.
+Um algoritmo bastante utilizado é o Not Recently used(NRU) este resulta de uma simplificação do LRU.
+Cada página em memória é mantida com 2 bits extra que indicam o estado,esses bits são atualizados a cada instrução de acordo com o grau de utilização.
+Quando ocorre um page fault o SO inspeciona esses bits e remove um ao acaso dos que tenham os bits correspondentes ao código"não usado recentemente".
+
