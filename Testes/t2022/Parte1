@@ -1,0 +1,13 @@
+1.
+Dado que os resultados são escritos só no fim o algoritmo priority scheduling não faz sentido uma vez que não vai haver prioridade entre eles.
+O shortest job first também não dado que não se consegue adivinhar o tamanho do proximo pedido de CPU.
+Assim o algoritmo apropriado seria o FCFS dado que este algoritmo não atribui prioridades e é de fácil leitura o que facilita a sua análise manual.
+
+2 a)
+No gerenciamento da memória virtual,o kernel mantém uma tabela na qual possui um mapeamento do endereço da memória virtual para um endereço fisico.
+Para cada transação de página, o kernel precisa carregar o mapeamento relacionado. 
+Se você tiver páginas de tamanho pequeno, precisará carregar mais números de páginas resultantes do kernel para carregar mais tabelas de mapeamento. Isso diminui o desempenho.
+Usar páginas enormes significa que precisará de menos páginas. Isso diminui bastante o número de tabelas de mapeamento a serem carregadas pelo kernel. Isso aumenta o desempenho no nível do kernel,
+Em suma, ao habilitar páginas enormes, o sistema tem menos tabelas de páginas para lidar e, portanto, menos sobrecarga para acessá-las/manter!
+
+b) Não,se o ficheiro log crescer lentamente haverá um desperdicio de memória dado que teremos paginas muito grandes para guardar pouca coisa e teria de se percorrer toda a tabela para ler coisas no fim perdendo mt tempo para ler dado que são paginas mt grandes.

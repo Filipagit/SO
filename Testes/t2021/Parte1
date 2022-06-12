@@ -1,0 +1,14 @@
+1.
+Uma interrupção pode ser proveniente de hardware ou de software.
+O hardware a qualquer momento pode enviar um sinal ao CPU,normalmente pelo BUS do sistema.O software executa uma system call.
+Quando ocorre uma  interrupção o CPU é interrompido,o estado do programa que está a correr é guardado para que possa retornar à sua execução,o CPU muda para o modo kernel.
+De seguida é localizado o código do kernel para tratar a interrupção através da tabela de handlers e do vetor de interrupção.
+A desafecção forçada é um mecanismo ligado ao escalonamento de processos e consiste na interrupção de um processo a correr no CPU devido à necessidade de execução de um outro processo mais apto em função dos critérios de escalonamento,tais como,a prioridade de um processo,não permitir que um processo fique demasiado tempo no CPU.
+Neste critério a cada processo é associada uma prioridade e o CPU é alocado ao processo com maior prioridade.
+
+2.
+Um processo está a fazer trashing quando demora mais tempo em paginação do que execução o que causa grandes perdas de performance.
+Se um processo não tem frames suficientes vai entrar em page fault.Assim,o Sistema Operativo vai ter de escolher uma página para libertar espaço na RAM,mandando essa página para disco.
+Contudo como todas as páginas estão sempre a ser utilizadas,entra-se num ciclo onde as págunas estão sempre a ser movidas o que causa mais page faults.
+
+
